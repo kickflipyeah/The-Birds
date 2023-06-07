@@ -20,7 +20,10 @@ class Load extends Phaser.Scene {
         this.load.audio('blipSelect', 'audio/blipSelect.wav');
         this.load.audio('jumpsound', 'audio/jumpsound.wav');
             //load img
-        this.load.image('title-screen', 'img/title-screen.png');   
+        this.load.image('title-screen', 'img/title-screen.png');
+        this.load.image('Bushes', 'img/Bushes.png');
+        this.load.image('Ground', 'img/Ground.png');
+        this.load.image('Sky', 'img/Sky.png');  
     }
     
     create() {

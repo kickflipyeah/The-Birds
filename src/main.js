@@ -18,7 +18,8 @@ let config = {
               y: 100
           }
       }
-  },
+    },
+    zoom: 2
   }
 
 let keyUP, keyENTER;
