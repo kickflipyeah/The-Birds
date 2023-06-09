@@ -24,6 +24,7 @@ class Load extends Phaser.Scene {
         this.load.image('Bushes', 'img/Bushes.png');
         this.load.image('Ground', 'img/Ground.png');
         this.load.image('Sky', 'img/Sky.png');  
+        this.load.image('Clouds', 'img/Clouds.png');
     }
     
     create() {

@@ -6,9 +6,13 @@
  */
 let config = {
     type: Phaser.AUTO,
+    antialias: false,
     width: 320,
     height: 240,
     scene: [ Load, Menu, Play ], 
+    render: {
+      pixelArt: true
+    },
     physics: {
       default: 'arcade',
       arcade: {
