@@ -14,17 +14,20 @@ class Load extends Phaser.Scene {
         this.load.on('complete', () => {
             loadingBar.destroy();
         });
-            
+        //path    
         this.load.path = './assets/';
-            //load audio
+        //load audio
         this.load.audio('blipSelect', 'audio/blipSelect.wav');
-        this.load.audio('jumpsound', 'audio/jumpsound.wav');
-            //load img
+        this.load.audio('jump', 'audio/jumpsound.wav');
+        //load img
         this.load.image('title-screen', 'img/title-screen.png');
         this.load.image('Bushes', 'img/Bushes.png');
         this.load.image('Ground', 'img/Ground.png');
         this.load.image('Sky', 'img/Sky.png');  
         this.load.image('Clouds', 'img/Clouds.png');
+        //load spritesheet
+        this.load.spritesheet('protag', 'img/protag.png', {frameWidth: 24, frameHeight: 30, startFrame: 0, endFrame: 14});
+        this.load.spritesheet('Birds', 'img/Birds.png', {frameWidth: 50, frameHeight: 28, startFrame: 0, endFrame: 1});
     }
     
     create() {
