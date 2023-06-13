@@ -33,14 +33,23 @@ class Play extends Phaser.Scene {
         //bird hurt kiddo
         this.physics.add.overlap(this.birds, this.protag, () => {
             this.protag.destroy();
-            this.score += 20;
+            // this.score += 20;
+            //this.scene.start('gameOverScene'); add game over scene
         });
+
+        //bird collide w ground
+        
     }
     update(){
         //make backgrounds scroll
         this.protag.update();
+        this.birds.update();
         this.clouds.tilePositionX += 0.3;
         this.ground.tilePositionX += 0.6;
         this.bushes.tilePositionX += 1.2;
+
+        playerPosX = this.protag.x;
+        playerPosY = this.protag.y;
+
     }
 }

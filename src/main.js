@@ -36,3 +36,5 @@ let centerY = game.config.height/2;
 let w = game.config.width;
 let h = game.config.height;
 let isJumping = false;
+let playerPosX = 0;
+let playerPosY = 0;
