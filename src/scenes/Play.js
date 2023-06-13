@@ -4,6 +4,8 @@ class Play extends Phaser.Scene {
         this.VEL = 100;
     }
     create() {
+        //play suspensful music 
+        this.sound.play('actionTrack', {volume: 0.5, loop: true});
         //add backgrounds
         this.add.image(0, 0, 'Sky').setOrigin(0, 0,); //add background sky
         this.clouds = this.add.tileSprite(0, -49, 512, 256, 'Clouds').setOrigin(0, 0); //add clouds
@@ -32,7 +34,7 @@ class Play extends Phaser.Scene {
 
         //bird hurt kiddo
         this.physics.add.overlap(this.birds, this.protag, () => {
-            this.protag.destroy();
+            console.log("bird hit player");
             // this.score += 20;
             //this.scene.start('gameOverScene'); add game over scene
         });
@@ -50,6 +52,8 @@ class Play extends Phaser.Scene {
 
         playerPosX = this.protag.x;
         playerPosY = this.protag.y;
+
+        //if bird collides with player, set the birds x and y velocity to be - 5 from where it currently is (so it moves backwards)
 
     }
 }

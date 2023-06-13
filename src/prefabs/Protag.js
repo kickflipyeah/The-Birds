@@ -8,7 +8,7 @@ class Protag extends Phaser.GameObjects.Sprite {
         this.body.setSize(10, 24, true);
         this.body.gravity.y = 330;
         this.body.maxVelocity.x = 330;
-        
+
         //cursor keys
         this.cursors = scene.input.keyboard.createCursorKeys();
         //add animations for walking
@@ -37,7 +37,7 @@ class Protag extends Phaser.GameObjects.Sprite {
             if (this.cursors.up.isDown) {
                 //this.anims.play('idle', true);
                 this.body.setVelocityY(-200);
-                this.scene.sound.play('jump');
+                this.scene.sound.play('jumpNoise');
                 isJumping = true;
             }
             else if(this.cursors.left.isDown && isJumping){
