@@ -4,6 +4,8 @@ class Play extends Phaser.Scene {
         this.VEL = 100;
     }
     create() {
+        //add camera
+        this.cameras.main.fadeIn(1000);
         //play suspensful music 
         this.sound.play('actionTrack', {volume: 0.5, loop: true});
         //add backgrounds
@@ -29,20 +31,9 @@ class Play extends Phaser.Scene {
         });
 
         //add bird
-        this.birds = new Birds(this, game.config.width/2, game.config.height/5, 'Birds');
+        this.birds = new Birds(this, game.config.width/1.1, game.config.height/9, 'Birds');
         this.birds.play('fly');
 
-        //bird hurt kiddo
-        this.physics.add.collider(this.birds, this.protag, () => {
-            console.log("bird hit player");
-            this.birds.x -= 30;
-            this.birds.y -= 30;
-            // this.score += 20;
-            //this.scene.start('gameOverScene'); add game over scene
-        });
-
-        //bird collide w ground
-        
     }
     update(){
         //make backgrounds scroll
@@ -55,7 +46,41 @@ class Play extends Phaser.Scene {
         playerPosX = this.protag.x;
         playerPosY = this.protag.y;
 
-        //if bird collides with player, set the birds x and y velocity to be - 5 from where it currently is (so it moves backwards)
+        this.physics.add.collider(this.birds, this.protag, () => {
+                //console.log("bird hit player");
+                if (this.birds.body.touching.left == true){
+                    this.birds.x += 60;
+                    this.birds.y -= 60;
+                    this.cameras.main.shake(100, 0.009);
+                    this.protag.setAlpha(0.5);
+                    this.time.delayedCall(1000, () => {
+                        this.protag.setAlpha(1);
+                    });
+                    // let birdSpeedX = 30;
+                    // let birdSpeedY = 30;
+                    // this.physics.moveTo(this.birds, birdSpeedX, birdSpeedY, 1000, 100);
+                    // console.log('bird touching left');
+                }
+                else if (this.birds.body.touching.right == true){
+                    this.birds.x -= 60;
+                    this.birds.y -= 60;
+                    this.cameras.main.shake(100, 0.009);
+                    // console.log('bird touching right');
+                }
+                else if (this.birds.body.touching.down == true){
+                    //this.birds.x -= 30;
+                    this.birds.y -= 60;
+                    this.cameras.main.shake(100, 0.009);
+                    this.protag.setAlpha(0.5);
+                   
+                    this.time.delayedCall(800, () => {
+                        this.protag.setAlpha(1);
+                    });
+                    // console.log('bird touching down');
+                }
+                
+            });
+       
 
     }
 }
