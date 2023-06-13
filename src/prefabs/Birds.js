@@ -32,6 +32,8 @@ class Birds extends Phaser.GameObjects.Sprite{
         this.body.setVelocityY(dir.y * birdSpeedY);
         //console.log(birdsPos);
         console.log(dir);
+
         
+
     }
 }

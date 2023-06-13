@@ -33,8 +33,10 @@ class Play extends Phaser.Scene {
         this.birds.play('fly');
 
         //bird hurt kiddo
-        this.physics.add.overlap(this.birds, this.protag, () => {
+        this.physics.add.collider(this.birds, this.protag, () => {
             console.log("bird hit player");
+            this.birds.x -= 30;
+            this.birds.y -= 30;
             // this.score += 20;
             //this.scene.start('gameOverScene'); add game over scene
         });

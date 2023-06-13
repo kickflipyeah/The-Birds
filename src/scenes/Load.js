@@ -18,11 +18,15 @@ class Load extends Phaser.Scene {
         //path    
         this.load.path = './assets/';
         //load audio
-        this.load.audio('selectNoise', 'audio/selectNoise.mp3');
-        this.load.audio('jumpNoise', 'audio/jumpNoise.mp3');
-        this.load.audio('actionTrack', 'audio/actionTrack.mp3');
+        this.load.audio('selectNoise', 'audio/selectNoise.mp3'); //select noise
+        this.load.audio('jumpNoise', 'audio/jumpNoise.mp3'); //jump effect
+        this.load.audio('actionTrack', 'audio/actionTrack.mp3'); //action chase song
+        this.load.audio('endScene', 'audio/endScene.mp3'); //sad end scene
+        this.load.audio('failSound', 'audio/failSound.mp3'); //level failed sound
+        this.load.audio('happyTrack', 'audio/happyTrack.mp3'); //happy beginning scene
+
         //load img
-        this.load.image('title-screen', 'img/title-screen.png');
+        this.load.image('title-screen', 'img/title-screen.png'); 
         this.load.image('Bushes', 'img/Bushes.png');
         this.load.image('Ground', 'img/Ground.png');
         this.load.image('Sky', 'img/Sky.png');  
