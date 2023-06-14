@@ -60,10 +60,12 @@ class Play extends Phaser.Scene {
         // health UI
         this.scoreText = this.add.text(0, 0, 'Health: ' + playerHealth, this.scoreConfig);
         // check bird health
-        if (this.birdHealth <= 0){
+        if (this.birdHealth <= 0 && birdAlive == true){
             this.birds.destroy();
+            console.log("bird dead");
+            birdAlive = false;
         }
-        else {
+        else if(this.birdHealth > 0 && birdAlive == true) {
             this.birds.update();
         }
         //make backgrounds scroll
@@ -72,6 +74,7 @@ class Play extends Phaser.Scene {
         this.clouds.tilePositionX += 0.3;
         this.ground.tilePositionX += 0.6;
         this.bushes.tilePositionX += 1.2;
+
         //variable for player position
         playerPosX = this.protag.x;
         playerPosY = this.protag.y;
@@ -99,12 +102,12 @@ class Play extends Phaser.Scene {
             this.rock.y = this.protag.y + 11;
         }
         //check if rock hits birds
-        if(this.checkCollision(this.rock, this.birds)) {
-            this.rock.reset();
-            this.rock.x = this.protag.x + 10;
-            this.rock.y = this.protag.y + 11;
-            //this.birdExplode(this.birds);
-        }
+        // if(this.checkCollision(this.rock, this.birds)) {
+        //     this.rock.reset();
+        //     this.rock.x = this.protag.x + 10;
+        //     this.rock.y = this.protag.y + 11;
+        //     //this.birdExplode(this.birds);
+        // }
 
         this.physics.add.collider(this.birds, this.protag, () => {
                 //console.log("bird hit player");
@@ -147,50 +150,48 @@ class Play extends Phaser.Scene {
                 
             });
 
+            this.physics.add.collider(this.rock, this.birds, () => {
+                if (this.birds.body.touching.left == true && birdAlpha == false){
+                    this.birds.x += 60;
+                    this.birds.y -= 60;
+                    this.birds.setAlpha(0.5);
+                    birdAlpha = true;
+                    this.birdHealth -= 1;z
+                    this.time.delayedCall(800, () => {
+                        this.birds.setAlpha(1);
+                        birdAlpha = false;
+                    });
+                    this.rock.reset();
+                }
+                else if (this.birds.body.touching.right == true && birdAlpha == false){
+                    this.birds.x -= 60;
+                    this.birds.y -= 60;
+                    this.birds.setAlpha(0.5);
+                    birdAlpha = true;
+                    this.birdHealth -= 1;
+                    this.time.delayedCall(800, () => {
+                        this.birds.setAlpha(1);
+                        birdAlpha = false;
+                    });
+                    this.rock.reset();
+                }
+                else if (this.birds.body.touching.down == true && birdAlpha == false){
+                    this.birds.y -= 60;
+                    this.birds.setAlpha(0.5);
+                    birdAlpha = true;
+                    this.birdHealth -= 1;
+                    this.time.delayedCall(800, () => {
+                        this.birds.setAlpha(1);
+                        birdAlpha = false;
+                    });
+                    this.rock.reset();
+                }
+                else {
+                    this.rock.reset();
+                }
+                console.log(this.birdHealth);
+            });
+
     }
 
-    checkCollision(rock, birds) {
-        this.physics.add.collider(rock, birds, () => {
-            if (birds.body.touching.left == true && birdAlpha == false){
-                birds.x += 60;
-                birds.y -= 60;
-                birds.setAlpha(0.5);
-                birdAlpha = true;
-                this.birdHealth -= 1;
-                this.time.delayedCall(800, () => {
-                    birds.setAlpha(1);
-                    birdAlpha = false;
-                });
-                rock.reset();
-            }
-            else if (birds.body.touching.right == true && birdAlpha == false){
-                birds.x -= 60;
-                birds.y -= 60;
-                birds.setAlpha(0.5);
-                birdAlpha = true;
-                this.birdHealth -= 1;
-                this.time.delayedCall(800, () => {
-                    birds.setAlpha(1);
-                    birdAlpha = false;
-                });
-                rock.reset();
-            }
-            else if (birds.body.touching.down == true && birdAlpha == false){
-                birds.y -= 60;
-                birds.setAlpha(0.5);
-                birdAlpha = true;
-                this.birdHealth -= 1;
-                this.time.delayedCall(800, () => {
-                    birds.setAlpha(1);
-                    birdAlpha = false;
-                });
-                rock.reset();
-            }
-            else {
-                rock.reset();
-            }
-            console.log(this.birdHealth);
-        });
-            
-    }
 }

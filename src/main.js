@@ -42,3 +42,4 @@ let playerHealth = 3;
 let keyW; //key for throwing rocks
 let isFiring = false;
 let birdAlpha = false;
+let birdAlive = true;
