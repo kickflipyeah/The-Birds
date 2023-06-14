@@ -31,9 +31,6 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.protag, this.floor, null, function(){
             isJumping = false;
         });
-        //make rock collide with floor
-        // this.physics.add.collider(this.rock, this.floor, null, function(){
-        // });
 
         //add bird
         this.birds = new Birds(this, game.config.width/1.1, game.config.height/9, 'Birds');
@@ -88,6 +85,11 @@ class Play extends Phaser.Scene {
     update(){
         // health UI
         this.scoreText = this.add.text(0, 0, 'Health: ' + playerHealth, this.scoreConfig);
+        if (playerHealth <= 0) {
+            this.sound.stopAll();
+            console.log("player dead");
+            this.scene.start('failScene');
+        }
         // check bird health
         if (this.birdHealth <= 0 && birdAlive == true){
             this.birds.destroy();
@@ -120,25 +122,22 @@ class Play extends Phaser.Scene {
             //     game.config.width - borderUISize - borderPadding);
         }
 
-        //statement for end condition
-        if (playerHealth <= 0){
-            this.gameOver = true;
-            //this.scene.start('gameOverScene');
-        }
         //reset rock
         if(this.rock.y <= 0) {
             this.rock.reset();
             this.rock.x = this.protag.x + 10;
             this.rock.y = this.protag.y + 11;
         }
+
         if (this.gameOver == true && this.birdHealth <= 0){
             this.sound.stopAll();
             this.scene.start('finalScene');
         } 
-        else if (this.gameOver == true && this.playerHealth <= 0){
-            this.sound.stopAll();
-            this.scene.start('failScene');
-        }
+        // else if (this.playerHealth <= 0){
+        //     this.sound.stopAll();
+        //     this.scene.start('failScene');
+        //     console.log("fail");
+        // }
 
 
     }

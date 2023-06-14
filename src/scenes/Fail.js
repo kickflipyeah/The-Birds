@@ -6,7 +6,7 @@ class Fail extends Phaser.Scene {
     create() {
         //add camera
         this.cameras.main.fadeIn(1000);
-        // this.add.image(0, 0, 'title-screen').setOrigin(0, 0,);
+        this.add.image(0, 0, 'fail-screen').setOrigin(0, 0,);
         keyENTER = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
       }
