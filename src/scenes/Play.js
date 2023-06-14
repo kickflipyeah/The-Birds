@@ -32,8 +32,8 @@ class Play extends Phaser.Scene {
             isJumping = false;
         });
         //make rock collide with floor
-        this.physics.add.collider(this.rock, this.floor, null, function(){
-        });
+        // this.physics.add.collider(this.rock, this.floor, null, function(){
+        // });
 
         //add bird
         this.birds = new Birds(this, game.config.width/1.1, game.config.height/9, 'Birds');
@@ -54,6 +54,35 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 100 
         };
+
+        this.physics.add.collider(this.birds, this.protag, () => {
+            this.birds.y -= 60;
+            this.cameras.main.shake(100, 0.009);
+            this.protag.setAlpha(0.5);
+            playerHealth -= 1;
+            this.time.delayedCall(800, () => {
+                this.protag.setAlpha(1);
+            });
+            if (this.birds.body.touching.left == true){
+                this.birds.x += 60;
+            }
+            else if (this.birds.body.touching.right == true){
+                this.birds.x -= 60;
+            }
+        });
+
+        this.physics.add.collider(this.rock, this.birds, () => {
+            this.birds.y -= 60;
+            this.birds.setAlpha(0.5);
+            birdAlpha = true;
+            this.birdHealth -= 1;
+            console.log('bird hit');
+            this.time.delayedCall(300, () => {
+                this.birds.setAlpha(1);
+                birdAlpha = false; 
+            });
+            this.rock.reset();
+        });
         
     }
     update(){
@@ -64,6 +93,7 @@ class Play extends Phaser.Scene {
             this.birds.destroy();
             console.log("bird dead");
             birdAlive = false;
+            this.gameOver = true;
         }
         else if(this.birdHealth > 0 && birdAlive == true) {
             this.birds.update();
@@ -92,7 +122,7 @@ class Play extends Phaser.Scene {
 
         //statement for end condition
         if (playerHealth <= 0){
-            this.scene.gameOver();
+            this.gameOver = true;
             //this.scene.start('gameOverScene');
         }
         //reset rock
@@ -101,104 +131,16 @@ class Play extends Phaser.Scene {
             this.rock.x = this.protag.x + 10;
             this.rock.y = this.protag.y + 11;
         }
-        //check if rock hits birds
-        // if(this.checkCollision(this.rock, this.birds)) {
-        //     this.rock.reset();
-        //     this.rock.x = this.protag.x + 10;
-        //     this.rock.y = this.protag.y + 11;
-        //     //this.birdExplode(this.birds);
-        // }
+        if (this.gameOver == true && this.birdHealth <= 0){
+            this.sound.stopAll();
+            this.scene.start('finalScene');
+        } 
+        else if (this.gameOver == true && this.playerHealth <= 0){
+            this.sound.stopAll();
+            this.scene.start('failScene');
+        }
 
-        this.physics.add.collider(this.birds, this.protag, () => {
-                //console.log("bird hit player");
-                if (this.birds.body.touching.left == true){
-                    this.birds.x += 60;
-                    this.birds.y -= 60;
-                    this.cameras.main.shake(100, 0.009);
-                    this.protag.setAlpha(0.5);
-                    playerHealth -= 1;
-                    this.time.delayedCall(800, () => {
-                        this.protag.setAlpha(1);
-                    });
-                    // let birdSpeedX = 30;
-                    // let birdSpeedY = 30;
-                    // this.physics.moveTo(this.birds, birdSpeedX, birdSpeedY, 1000, 100);
-                    // console.log('bird touching left');
-                }
-                else if (this.birds.body.touching.right == true){
-                    this.birds.x -= 60;
-                    this.birds.y -= 60;
-                    this.protag.setAlpha(0.5);
-                    playerHealth -= 1;
-                    this.cameras.main.shake(100, 0.009);
-                    this.time.delayedCall(800, () => {
-                        this.protag.setAlpha(1);
-                    });
-                    // console.log('bird touching right');
-                }
-                else if (this.birds.body.touching.down == true){
-                    //this.birds.x -= 30;
-                    this.birds.y -= 60;
-                    this.cameras.main.shake(100, 0.009);
-                    this.protag.setAlpha(0.5);
-                    playerHealth -= 1;
-                    this.time.delayedCall(800, () => {
-                        this.protag.setAlpha(1);
-                    });
-                    // console.log('bird touching down');
-                }
-                
-            });
-
-            this.physics.add.collider(this.rock, this.birds, () => {
-                if (this.birds.body.touching.left == true && birdAlpha == false){
-                    this.birds.x += 60;
-                    this.birds.y -= 60;
-                    this.birds.setAlpha(0.5);
-                    birdAlpha = true;
-                    this.birdHealth -= 1;
-                    console.log('bird hit');
-                    this.time.delayedCall(300, () => {
-                        this.birds.setAlpha(1);
-                        birdAlpha = false;
-                    });
-                    this.rock.reset();
-                }
-                else if (this.birds.body.touching.right == true && birdAlpha == false){
-                    this.birds.x -= 60;
-                    this.birds.y -= 60;
-                    this.birds.setAlpha(0.5);
-                    birdAlpha = true;
-                    this.birdHealth -= 1;
-                    console.log('bird hit');
-                    this.time.delayedCall(300, () => {
-                        this.birds.setAlpha(1);
-                        birdAlpha = false;
-                    });
-                    this.rock.reset();
-                }
-                else if (this.birds.body.touching.down == true){ // && birdAlpha == false
-                    this.birds.y -= 60;
-                    // this.birds.setAlpha(0.5);
-                    // birdAlpha = true;
-                    this.birdHealth -= 1;
-                    console.log('bird hit');
-                    // this.time.delayedCall(300, () => {
-                    //     this.birds.setAlpha(1);
-                    //     birdAlpha = false;
-                    // });
-                    this.rock.reset();
-                }
-                else {
-                    this.rock.reset();
-                    birdAlpha = false;
-                }
-                console.log(this.birdHealth);
-            });
 
     }
 
 }
-
-
-
