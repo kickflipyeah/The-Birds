@@ -9,8 +9,10 @@ class Protag extends Phaser.GameObjects.Sprite {
         this.body.gravity.y = 330;
         this.body.maxVelocity.x = 330;
 
-        //cursor keys
+        //cursor keys and W
         this.cursors = scene.input.keyboard.createCursorKeys();
+        // keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+
         //add animations for walking
         this.anims.create({
             key: 'walkL',

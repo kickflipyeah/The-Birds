@@ -6,6 +6,8 @@ class Menu extends Phaser.Scene {
     create() {
         this.add.image(0, 0, 'title-screen').setOrigin(0, 0,);
         keyENTER = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+        keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        
       }
 
     update() {

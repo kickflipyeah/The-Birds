@@ -34,6 +34,7 @@ class Load extends Phaser.Scene {
         //load spritesheet
         this.load.spritesheet('protag', 'img/protag.png', {frameWidth: 24, frameHeight: 30, startFrame: 0, endFrame: 14});
         this.load.spritesheet('Birds', 'img/Birds.png', {frameWidth: 50, frameHeight: 28, startFrame: 0, endFrame: 1});
+        this.load.spritesheet('Rock', 'img/Rock.png', {frameWidth: 6, frameHeight: 6, startFrame: 0, endFrame: 1});
     }
     
     create() {

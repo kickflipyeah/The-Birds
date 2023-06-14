@@ -38,3 +38,7 @@ let h = game.config.height;
 let isJumping = false;
 let playerPosX = 0;
 let playerPosY = 0;
+let playerHealth = 3;
+let keyW; //key for throwing rocks
+let isFiring = false;
+let birdAlpha = false;
