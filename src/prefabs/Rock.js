@@ -7,19 +7,14 @@ class Rock extends Phaser.GameObjects.Sprite {
         this.body.setAllowGravity(false);
         this.movementSpeed = 2;
         this.cursors = scene.input.keyboard.createCursorKeys();
+        this.anims.create({
+            key: 'shift',
+            frameRate: 4,
+            frames: this.anims.generateFrameNumbers('Rock', { start: 0, end: 1 }),
+            repeat: -1
+        });
     }
     update() {
-        // if(!isFiring) {
-        //     this.x = this.protag.x;
-        //     this.y = this.protag.y;
-        //     if (this.cursors.down.isDown) {
-        //         isFiring = true;
-        //         // this.sound.play();  play effect sound
-        //     }
-        //     // this.x = Phaser.Math.Clamp(this.x, borderUISize + borderPadding,
-        //     //     game.config.width - borderUISize - borderPadding);
-        // }
-
         if(isFiring && this.y >= 0) {
             this.y -= this.movementSpeed;
          }

@@ -3,7 +3,7 @@ class Birds extends Phaser.GameObjects.Sprite{
         super(scene, x, y, texture, frame);
         scene.add.existing(this); //add to existing scene
         scene.physics.add.existing(this); //add physics
-        this.body.setSize(30, 15, true);
+        this.body.setSize(40, 15, true);
         //make birds fly by screen, shooting out smaller bird claws to attack the boy
         this.body.setAllowGravity(false);
        // this.body.setVelocityX(-100); //can make a bird speed variable
@@ -23,7 +23,7 @@ class Birds extends Phaser.GameObjects.Sprite{
         }
         //speed of bird
         let birdSpeedX = 40;
-        let birdSpeedY = 20;
+        let birdSpeedY = 40;
         let playerPos = new Phaser.Math.Vector2(playerPosX, playerPosY); //getting the number of the player position
         let birdsPos = new Phaser.Math.Vector2(this.x, this.y);
         let dir = playerPos.subtract(birdsPos); //getting the direction

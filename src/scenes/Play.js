@@ -38,7 +38,7 @@ class Play extends Phaser.Scene {
         //add bird
         this.birds = new Birds(this, game.config.width/1.1, game.config.height/9, 'Birds');
         this.birds.play('fly');
-        this.birdHealth = 3;
+        this.birdHealth = 15;
         this.protag.body.setCollideWorldBounds(true);
 
         //configuration for the score text
@@ -156,8 +156,9 @@ class Play extends Phaser.Scene {
                     this.birds.y -= 60;
                     this.birds.setAlpha(0.5);
                     birdAlpha = true;
-                    this.birdHealth -= 1;z
-                    this.time.delayedCall(800, () => {
+                    this.birdHealth -= 1;
+                    console.log('bird hit');
+                    this.time.delayedCall(300, () => {
                         this.birds.setAlpha(1);
                         birdAlpha = false;
                     });
@@ -169,25 +170,28 @@ class Play extends Phaser.Scene {
                     this.birds.setAlpha(0.5);
                     birdAlpha = true;
                     this.birdHealth -= 1;
-                    this.time.delayedCall(800, () => {
+                    console.log('bird hit');
+                    this.time.delayedCall(300, () => {
                         this.birds.setAlpha(1);
                         birdAlpha = false;
                     });
                     this.rock.reset();
                 }
-                else if (this.birds.body.touching.down == true && birdAlpha == false){
+                else if (this.birds.body.touching.down == true){ // && birdAlpha == false
                     this.birds.y -= 60;
-                    this.birds.setAlpha(0.5);
-                    birdAlpha = true;
+                    // this.birds.setAlpha(0.5);
+                    // birdAlpha = true;
                     this.birdHealth -= 1;
-                    this.time.delayedCall(800, () => {
-                        this.birds.setAlpha(1);
-                        birdAlpha = false;
-                    });
+                    console.log('bird hit');
+                    // this.time.delayedCall(300, () => {
+                    //     this.birds.setAlpha(1);
+                    //     birdAlpha = false;
+                    // });
                     this.rock.reset();
                 }
                 else {
                     this.rock.reset();
+                    birdAlpha = false;
                 }
                 console.log(this.birdHealth);
             });
@@ -195,3 +199,6 @@ class Play extends Phaser.Scene {
     }
 
 }
+
+
+
