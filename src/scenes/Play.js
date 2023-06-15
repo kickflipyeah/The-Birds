@@ -38,7 +38,7 @@ class Play extends Phaser.Scene {
         birdAlive = true; //added in to check if bird is alive
         this.birds = new Birds(this, game.config.width/1.1, game.config.height/9, 'Birds');
         this.birds.play('fly');
-        this.birdHealth = 5;
+        this.birdHealth = 10;
         this.protag.body.setCollideWorldBounds(true);
 
         this.scoreConfig = {

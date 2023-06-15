@@ -24,7 +24,7 @@ class Birds extends Phaser.GameObjects.Sprite{
             this.destroy();
         }
         //speed of bird
-        let birdSpeedX = 40;
+        let birdSpeedX = 50;
         let birdSpeedY = 40;
         let playerPos = new Phaser.Math.Vector2(playerPosX, playerPosY); //getting the number of the player position
         let birdsPos = new Phaser.Math.Vector2(this.x, this.y);
