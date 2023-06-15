@@ -9,7 +9,7 @@ let config = {
     antialias: false,
     width: 320,
     height: 240,
-    scene: [ Load, Menu, Play ], 
+    scene: [ Load, Menu, Start, Play, Fail, Final ], 
     render: {
       pixelArt: true
     },

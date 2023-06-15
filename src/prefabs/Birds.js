@@ -1,4 +1,5 @@
 class Birds extends Phaser.GameObjects.Sprite{
+
     constructor(scene, x, y, texture, frame){
         super(scene, x, y, texture, frame);
         scene.add.existing(this); //add to existing scene
@@ -7,7 +8,6 @@ class Birds extends Phaser.GameObjects.Sprite{
         //make birds fly by screen, shooting out smaller bird claws to attack the boy
         this.body.setAllowGravity(false);
        // this.body.setVelocityX(-100); //can make a bird speed variable
-
         this.anims.create({
             key: 'fly',
             frameRate: 4,
@@ -30,10 +30,6 @@ class Birds extends Phaser.GameObjects.Sprite{
         dir = dir.normalize(); //normalizing the direction
         this.body.setVelocityX(dir.x * birdSpeedX); //moving bird towards player
         this.body.setVelocityY(dir.y * birdSpeedY);
-        //console.log(birdsPos);
-        
-
-        
-
+      
     }
 }
