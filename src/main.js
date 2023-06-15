@@ -9,14 +9,14 @@ let config = {
     antialias: false,
     width: 320,
     height: 240,
-    scene: [ Load, Menu, Start, Play, Fail, Final ], 
+    scene: [ Load, Menu, Start, Credit, Play, Fail, Final ], 
     render: {
       pixelArt: true
     },
     physics: {
       default: 'arcade',
       arcade: {
-          debug: true,
+          //debug: true,
           gravity: {
               x: 0,
               y: 100
@@ -28,7 +28,6 @@ let config = {
 
 let keyUP, keyENTER;
 let game = new Phaser.Game(config);
-
 let borderUISize = game.config.height / 15;
 let borderPadding = borderUISize / 3;
 let centerX = game.config.width/2;

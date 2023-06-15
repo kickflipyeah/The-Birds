@@ -17,7 +17,6 @@ class Birds extends Phaser.GameObjects.Sprite{
         this.isAlive = true; // add the isAlive property and initialize it to true
         this.hp = 5; // add the health property
 
-
     }
     update() {
         //destroy birds if they go off screen

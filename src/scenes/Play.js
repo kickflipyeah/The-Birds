@@ -13,6 +13,7 @@ class Play extends Phaser.Scene {
         this.clouds = this.add.tileSprite(0, -49, 512, 256, 'Clouds').setOrigin(0, 0); //add clouds
         this.ground = this.add.tileSprite(0, 187, 512, 64, 'Ground').setOrigin(0, 0); //add ground
         this.bushes = this.add.tileSprite(0, 212, 512, 32, 'Bushes').setOrigin(0, 0); //add bushes
+        this.add.image(0, 0, 'border').setOrigin(0, 0,); //add foreground   
         //add collider to floor
         this.floor = this.physics.add.image(0, 193).setOrigin(0, 0);
         this.floor.displayHeight = 32;
@@ -20,7 +21,8 @@ class Play extends Phaser.Scene {
         this.floor.body.setAllowGravity(false);
         this.floor.setImmovable(true);
         //add rock weapon
-        this.rock = new Rock(this, 42, 177, 'Rock').setOrigin(0.0, 0);       
+        this.rock = new Rock(this, 42, 177, 'Rock').setOrigin(0.0, 0); 
+        this.rock.play('shift');      
         //add protagonist sprite
         this.protag = new Protag(this, 32, 170, 'protag').setOrigin(0, 0);
         this.protag.play('walkR');
@@ -39,12 +41,6 @@ class Play extends Phaser.Scene {
         this.birdHealth = 5;
         this.protag.body.setCollideWorldBounds(true);
 
-       // this.birdtwo = new Birds(this, game.config.width/1.1, game.config.height/9, 'Birds');
-        //this.birdtwo.play('fly');
-//this.birdtwo.body.setCollideWorldBounds(true);
-
-        //this.realbirdslist = [birds, birdtwo]
-        //configuration for the score text
         this.scoreConfig = {
             fontFamily: 'Helvetica',
             fontSize: '20px',
@@ -62,9 +58,11 @@ class Play extends Phaser.Scene {
             this.birds.y -= 60;
             this.cameras.main.shake(100, 0.009);
             this.protag.setAlpha(0.5);
+            this.rock.setAlpha(0.2);
             playerHealth -= 1;
             this.time.delayedCall(800, () => {
                 this.protag.setAlpha(1);
+                this.rock.setAlpha(1);
             });
             if (this.birds.body.touching.left == true){
                 this.birds.x += 60;

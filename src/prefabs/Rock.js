@@ -7,6 +7,7 @@ class Rock extends Phaser.GameObjects.Sprite {
         this.body.setAllowGravity(false);
         this.movementSpeed = 2;
         this.cursors = scene.input.keyboard.createCursorKeys();
+        
         this.anims.create({
             key: 'shift',
             frameRate: 4,

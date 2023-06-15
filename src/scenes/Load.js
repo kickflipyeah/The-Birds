@@ -34,6 +34,9 @@ class Load extends Phaser.Scene {
         this.load.image('start-screen', 'img/start-screen.png');
         this.load.image('fail-screen', 'img/fail-screen.png');
         this.load.image('final-screen', 'img/final-screen.png');
+        this.load.image('credits-page', 'img/credits-page.png');
+        this.load.image('border', 'img/border.png');
+
         //load spritesheet
         this.load.spritesheet('protag', 'img/protag.png', {frameWidth: 24, frameHeight: 30, startFrame: 0, endFrame: 14});
         this.load.spritesheet('Birds', 'img/Birds.png', {frameWidth: 50, frameHeight: 28, startFrame: 0, endFrame: 1});
