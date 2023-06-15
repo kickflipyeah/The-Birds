@@ -13,10 +13,12 @@ class Fail extends Phaser.Scene {
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(keyENTER)) {
+            // this.scene.stop('failScene');
             this.sound.play('selectNoise');
             this.scene.start('playScene');
           }
         else if (Phaser.Input.Keyboard.JustDown(keyW)) {
+            // this.scene.stop('failScene');
             this.sound.play('selectNoise');
             this.scene.start('menuScene');
           }

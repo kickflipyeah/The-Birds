@@ -33,9 +33,10 @@ class Play extends Phaser.Scene {
         });
 
         //add bird
+        birdAlive = true; //added in to check if bird is alive
         this.birds = new Birds(this, game.config.width/1.1, game.config.height/9, 'Birds');
         this.birds.play('fly');
-        this.birdHealth = 15;
+        this.birdHealth = 1;
         this.protag.body.setCollideWorldBounds(true);
 
         //configuration for the score text
@@ -87,14 +88,22 @@ class Play extends Phaser.Scene {
         this.scoreText = this.add.text(0, 0, 'Health: ' + playerHealth, this.scoreConfig);
         if (playerHealth <= 0) {
             this.sound.stopAll();
+            this.physics.pause();
             console.log("player dead");
+
+            //move to fail screen
+            // this.scene.stop("playScene");
             this.scene.start('failScene');
+
+            //reset health
+            playerHealth = 3;
         }
         // check bird health
         if (this.birdHealth <= 0 && birdAlive == true){
             this.birds.destroy();
             console.log("bird dead");
             birdAlive = false;
+            this.physics.pause();
             this.gameOver = true;
         }
         else if(this.birdHealth > 0 && birdAlive == true) {
@@ -103,6 +112,7 @@ class Play extends Phaser.Scene {
         //make backgrounds scroll
         this.protag.update(); //add end screen for death
         this.rock.update();
+
         this.clouds.tilePositionX += 0.3;
         this.ground.tilePositionX += 0.6;
         this.bushes.tilePositionX += 1.2;
@@ -116,12 +126,8 @@ class Play extends Phaser.Scene {
             this.rock.y = playerPosY + 11;
             if (this.cursors.down.isDown) {
                 isFiring = true;
-                // this.sound.play();  play effect sound
             }
-            // this.x = Phaser.Math.Clamp(this.x, borderUISize + borderPadding,
-            //     game.config.width - borderUISize - borderPadding);
         }
-
         //reset rock
         if(this.rock.y <= 0) {
             this.rock.reset();
@@ -131,14 +137,10 @@ class Play extends Phaser.Scene {
 
         if (this.gameOver == true && this.birdHealth <= 0){
             this.sound.stopAll();
+            this.physics.pause();
+            this.scene.stop("playScene");
             this.scene.start('finalScene');
         } 
-        // else if (this.playerHealth <= 0){
-        //     this.sound.stopAll();
-        //     this.scene.start('failScene');
-        //     console.log("fail");
-        // }
-
 
     }
 
