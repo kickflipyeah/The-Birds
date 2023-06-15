@@ -14,6 +14,9 @@ class Birds extends Phaser.GameObjects.Sprite{
             frames: this.anims.generateFrameNumbers('Birds', { start: 0, end: 1 }),
             repeat: -1
         });
+        this.isAlive = true; // add the isAlive property and initialize it to true
+        this.hp = 5; // add the health property
+
 
     }
     update() {

@@ -36,9 +36,14 @@ class Play extends Phaser.Scene {
         birdAlive = true; //added in to check if bird is alive
         this.birds = new Birds(this, game.config.width/1.1, game.config.height/9, 'Birds');
         this.birds.play('fly');
-        this.birdHealth = 1;
+        this.birdHealth = 5;
         this.protag.body.setCollideWorldBounds(true);
 
+       // this.birdtwo = new Birds(this, game.config.width/1.1, game.config.height/9, 'Birds');
+        //this.birdtwo.play('fly');
+//this.birdtwo.body.setCollideWorldBounds(true);
+
+        //this.realbirdslist = [birds, birdtwo]
         //configuration for the score text
         this.scoreConfig = {
             fontFamily: 'Helvetica',
@@ -69,19 +74,20 @@ class Play extends Phaser.Scene {
             }
         });
 
-        this.physics.add.collider(this.rock, this.birds, () => {
+         this.physics.add.collider(this.rock, this.birds, () => {
             this.birds.y -= 60;
             this.birds.setAlpha(0.5);
             birdAlpha = true;
             this.birdHealth -= 1;
+            this.birds.hp -= 1;
+            console.log('bird hp', this.birds.hp);
             console.log('bird hit');
             this.time.delayedCall(300, () => {
                 this.birds.setAlpha(1);
                 birdAlpha = false; 
             });
             this.rock.reset();
-        });
-        
+        }); 
     }
     update(){
         // health UI
@@ -99,14 +105,16 @@ class Play extends Phaser.Scene {
             playerHealth = 3;
         }
         // check bird health
-        if (this.birdHealth <= 0 && birdAlive == true){
+        //if (this.birdHealth <= 0 && birdAlive == true){
+        if (this.birds.hp <= 0 && this.birds.isAlive == true){
             this.birds.destroy();
             console.log("bird dead");
             birdAlive = false;
+            this.birds.isAlive = false;
             this.physics.pause();
             this.gameOver = true;
         }
-        else if(this.birdHealth > 0 && birdAlive == true) {
+        else if(this.birds.hp > 0 && this.birds.isAlive == true) {
             this.birds.update();
         }
         //make backgrounds scroll
@@ -135,7 +143,7 @@ class Play extends Phaser.Scene {
             this.rock.y = this.protag.y + 11;
         }
 
-        if (this.gameOver == true && this.birdHealth <= 0){
+        if (this.gameOver == true && this.birds.hp <= 0){
             this.sound.stopAll();
             this.physics.pause();
             this.scene.stop("playScene");
