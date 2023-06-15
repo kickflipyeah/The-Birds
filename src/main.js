@@ -2,7 +2,8 @@
  *  Jessica Zogaric
  *  The Birds
  *  Approximate time to complete: 
- *  
+ *  20 hours 
+ * 
  */
 let config = {
     type: Phaser.AUTO,
