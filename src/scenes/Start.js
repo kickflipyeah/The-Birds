@@ -13,7 +13,7 @@ class Start extends Phaser.Scene {
     update() {
         if (Phaser.Input.Keyboard.JustDown(keyENTER)) {
             this.sound.play('selectNoise');
-            this.scene.start('playScene');
+            this.scene.start('creditScene');
           }
     }
 }

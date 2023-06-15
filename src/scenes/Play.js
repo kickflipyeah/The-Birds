@@ -13,6 +13,7 @@ class Play extends Phaser.Scene {
         this.clouds = this.add.tileSprite(0, -49, 512, 256, 'Clouds').setOrigin(0, 0); //add clouds
         this.ground = this.add.tileSprite(0, 187, 512, 64, 'Ground').setOrigin(0, 0); //add ground
         this.bushes = this.add.tileSprite(0, 212, 512, 32, 'Bushes').setOrigin(0, 0); //add bushes
+        this.add.image(0, 0, 'border').setOrigin(0, 0,); //add foreground   
         //add collider to floor
         this.floor = this.physics.add.image(0, 193).setOrigin(0, 0);
         this.floor.displayHeight = 32;
@@ -20,7 +21,8 @@ class Play extends Phaser.Scene {
         this.floor.body.setAllowGravity(false);
         this.floor.setImmovable(true);
         //add rock weapon
-        this.rock = new Rock(this, 42, 177, 'Rock').setOrigin(0.0, 0);       
+        this.rock = new Rock(this, 42, 177, 'Rock').setOrigin(0.0, 0); 
+        this.rock.play('shift');      
         //add protagonist sprite
         this.protag = new Protag(this, 32, 170, 'protag').setOrigin(0, 0);
         this.protag.play('walkR');
@@ -36,10 +38,9 @@ class Play extends Phaser.Scene {
         birdAlive = true; //added in to check if bird is alive
         this.birds = new Birds(this, game.config.width/1.1, game.config.height/9, 'Birds');
         this.birds.play('fly');
-        this.birdHealth = 1;
+        this.birdHealth = 10;
         this.protag.body.setCollideWorldBounds(true);
 
-        //configuration for the score text
         this.scoreConfig = {
             fontFamily: 'Helvetica',
             fontSize: '20px',
@@ -57,9 +58,11 @@ class Play extends Phaser.Scene {
             this.birds.y -= 60;
             this.cameras.main.shake(100, 0.009);
             this.protag.setAlpha(0.5);
+            this.rock.setAlpha(0.2);
             playerHealth -= 1;
             this.time.delayedCall(800, () => {
                 this.protag.setAlpha(1);
+                this.rock.setAlpha(1);
             });
             if (this.birds.body.touching.left == true){
                 this.birds.x += 60;
@@ -69,19 +72,20 @@ class Play extends Phaser.Scene {
             }
         });
 
-        this.physics.add.collider(this.rock, this.birds, () => {
+         this.physics.add.collider(this.rock, this.birds, () => {
             this.birds.y -= 60;
             this.birds.setAlpha(0.5);
             birdAlpha = true;
             this.birdHealth -= 1;
+            this.birds.hp -= 1;
+            console.log('bird hp', this.birds.hp);
             console.log('bird hit');
             this.time.delayedCall(300, () => {
                 this.birds.setAlpha(1);
                 birdAlpha = false; 
             });
             this.rock.reset();
-        });
-        
+        }); 
     }
     update(){
         // health UI
@@ -99,14 +103,16 @@ class Play extends Phaser.Scene {
             playerHealth = 3;
         }
         // check bird health
-        if (this.birdHealth <= 0 && birdAlive == true){
+        //if (this.birdHealth <= 0 && birdAlive == true){
+        if (this.birds.hp <= 0 && this.birds.isAlive == true){
             this.birds.destroy();
             console.log("bird dead");
             birdAlive = false;
+            this.birds.isAlive = false;
             this.physics.pause();
             this.gameOver = true;
         }
-        else if(this.birdHealth > 0 && birdAlive == true) {
+        else if(this.birds.hp > 0 && this.birds.isAlive == true) {
             this.birds.update();
         }
         //make backgrounds scroll
@@ -135,7 +141,7 @@ class Play extends Phaser.Scene {
             this.rock.y = this.protag.y + 11;
         }
 
-        if (this.gameOver == true && this.birdHealth <= 0){
+        if (this.gameOver == true && this.birds.hp <= 0){
             this.sound.stopAll();
             this.physics.pause();
             this.scene.stop("playScene");
